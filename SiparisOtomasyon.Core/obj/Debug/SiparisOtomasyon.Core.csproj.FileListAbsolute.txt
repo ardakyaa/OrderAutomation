@@ -1,0 +1,6 @@
+C:\MyWorkSpaces\2_SQL_C#_Examples\SiparisOtomasyon\SiparisOtomasyon.Core\bin\Debug\SiparisOtomasyon.Core.dll
+C:\MyWorkSpaces\2_SQL_C#_Examples\SiparisOtomasyon\SiparisOtomasyon.Core\bin\Debug\SiparisOtomasyon.Core.pdb
+C:\MyWorkSpaces\2_SQL_C#_Examples\SiparisOtomasyon\SiparisOtomasyon.Core\obj\Debug\SiparisOtomasyon.Core.csproj.AssemblyReference.cache
+C:\MyWorkSpaces\2_SQL_C#_Examples\SiparisOtomasyon\SiparisOtomasyon.Core\obj\Debug\SiparisOtomasyon.Core.csproj.CoreCompileInputs.cache
+C:\MyWorkSpaces\2_SQL_C#_Examples\SiparisOtomasyon\SiparisOtomasyon.Core\obj\Debug\SiparisOtomasyon.Core.dll
+C:\MyWorkSpaces\2_SQL_C#_Examples\SiparisOtomasyon\SiparisOtomasyon.Core\obj\Debug\SiparisOtomasyon.Core.pdb

@@ -1,0 +1,11 @@
+C:\MyWorkSpaces\2_SQL_C#_Examples\SiparisOtomasyon\SiparisOtomasyon.DAL\bin\Debug\SiparisOtomasyon.DAL.dll
+C:\MyWorkSpaces\2_SQL_C#_Examples\SiparisOtomasyon\SiparisOtomasyon.DAL\bin\Debug\SiparisOtomasyon.DAL.pdb
+C:\MyWorkSpaces\2_SQL_C#_Examples\SiparisOtomasyon\SiparisOtomasyon.DAL\bin\Debug\EntityFramework.dll
+C:\MyWorkSpaces\2_SQL_C#_Examples\SiparisOtomasyon\SiparisOtomasyon.DAL\bin\Debug\EntityFramework.SqlServer.dll
+C:\MyWorkSpaces\2_SQL_C#_Examples\SiparisOtomasyon\SiparisOtomasyon.DAL\bin\Debug\EntityFramework.xml
+C:\MyWorkSpaces\2_SQL_C#_Examples\SiparisOtomasyon\SiparisOtomasyon.DAL\bin\Debug\EntityFramework.SqlServer.xml
+C:\MyWorkSpaces\2_SQL_C#_Examples\SiparisOtomasyon\SiparisOtomasyon.DAL\obj\Debug\SiparisOtomasyon.DAL.csproj.AssemblyReference.cache
+C:\MyWorkSpaces\2_SQL_C#_Examples\SiparisOtomasyon\SiparisOtomasyon.DAL\obj\Debug\SiparisOtomasyon.DAL.csproj.CoreCompileInputs.cache
+C:\MyWorkSpaces\2_SQL_C#_Examples\SiparisOtomasyon\SiparisOtomasyon.DAL\obj\Debug\SiparisOtomasyon.DAL.csproj.CopyComplete
+C:\MyWorkSpaces\2_SQL_C#_Examples\SiparisOtomasyon\SiparisOtomasyon.DAL\obj\Debug\SiparisOtomasyon.DAL.dll
+C:\MyWorkSpaces\2_SQL_C#_Examples\SiparisOtomasyon\SiparisOtomasyon.DAL\obj\Debug\SiparisOtomasyon.DAL.pdb
