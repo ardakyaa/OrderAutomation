@@ -56,6 +56,7 @@ namespace SiparisOtomasyon.WinUI
 
             var form = new CustomerForm();
             form.MdiParent = this.MdiParent;
+            form.Dock = DockStyle.Fill;
             form.Tag = customer.CustomerID;
             form.FormClosed += Form_FormClosed;
             form.Show();

@@ -12,13 +12,6 @@ namespace SiparisOtomasyon.DAL.Concrete
 
     public class EmployeeRepo : GenericRepo<Employee, int>, IEmployeeRepo
     {
-        NorthwindContext DB;
-
-        public EmployeeRepo()
-        {
-            DB = new NorthwindContext();
-        }
-
         public List<EmployeeVM> GetEmployeeVMs()
         {
             var employees = (from t0 in DB.Employees

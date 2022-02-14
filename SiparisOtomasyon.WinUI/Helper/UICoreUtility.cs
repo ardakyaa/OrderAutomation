@@ -79,7 +79,7 @@ namespace SiparisOtomasyon.WinUI.Helper
                 }
                 else if(control is DateTimePicker)
                 {
-                    (control as DateTimePicker).Value = DateTime.Today;
+                    (control as DateTimePicker).Value = DateTime.Now;
                 }
                 else if (control is GroupBox)
                 {
@@ -89,6 +89,13 @@ namespace SiparisOtomasyon.WinUI.Helper
                 {
                     FormClear(control as Panel);
                 }
+
+                //Switch case ile yap
+
+                //switch(Control)
+                //{
+
+                //}
             }
         }
     }

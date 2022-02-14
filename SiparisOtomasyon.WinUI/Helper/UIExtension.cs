@@ -30,7 +30,6 @@ namespace SiparisOtomasyon.WinUI.Helper
             combo.DataSource = newDatasources;
             combo.DisplayMember = "Key";
             combo.ValueMember = "Value";
-            
 
         }
 
@@ -52,6 +51,20 @@ namespace SiparisOtomasyon.WinUI.Helper
             combo.DisplayMember = "Key";
             combo.ValueMember = "Value";
 
+        }
+
+        /// <summary>
+        /// Combobox üzerinde eğer bir datasource atanmış ise bu method ile unboxing yapmadan değeri geri okuyabilirim.
+        /// </summary>
+        /// <typeparam name="TValue"></typeparam>
+        /// <typeparam name="TData"></typeparam>
+        /// <param name="combo"></param>
+        /// <returns></returns>
+        public static TValue? GetValue<TValue, TData>(this ComboBox combo)
+            where TValue : struct
+            where TData : class
+        {
+            return ((combo.DataSource as List<KeyValue<TValue, TData>>)[combo.SelectedIndex]).Value;
         }
 
         //Null gelebilecek olan CategoryID ve SupplierID de hata almamak için

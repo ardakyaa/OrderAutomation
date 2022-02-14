@@ -55,10 +55,11 @@ namespace SiparisOtomasyon.WinUI
             password = mtxtPassword.Text;
 
             if (userName == "admin" && password == "123456")
-            {
+            {                
                 FormMain form = new FormMain();
                 form.ShowDialog();
                 this.Close();
+
             }
             else
             {

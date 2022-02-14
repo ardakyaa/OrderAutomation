@@ -38,9 +38,9 @@ namespace SiparisOtomasyon.WinUI
             this.btnNew = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.grid = new System.Windows.Forms.DataGridView();
-            this.panel4 = new System.Windows.Forms.Panel();
+            this.pnlOrderDetail = new System.Windows.Forms.Panel();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.btnDeleteOrder = new System.Windows.Forms.Button();
+            this.btnDeleteOrderDetail = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.nuDiscount = new System.Windows.Forms.NumericUpDown();
             this.nuQuantity = new System.Windows.Forms.NumericUpDown();
@@ -77,24 +77,27 @@ namespace SiparisOtomasyon.WinUI
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.lblToplam = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
-            this.panel4.SuspendLayout();
+            this.pnlOrderDetail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nuDiscount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nuQuantity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nuUnitPrice)).BeginInit();
             this.panel5.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nuFreight)).BeginInit();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 21.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(5, 23);
+            this.label1.Location = new System.Drawing.Point(5, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(188, 40);
             this.label1.TabIndex = 0;
@@ -107,7 +110,7 @@ namespace SiparisOtomasyon.WinUI
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(910, 75);
+            this.panel1.Size = new System.Drawing.Size(910, 60);
             this.panel1.TabIndex = 1;
             // 
             // btnExit
@@ -121,6 +124,7 @@ namespace SiparisOtomasyon.WinUI
             this.btnExit.TabIndex = 0;
             this.btnExit.Text = "Kapat";
             this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // panel3
             // 
@@ -144,6 +148,7 @@ namespace SiparisOtomasyon.WinUI
             this.btnDelete.TabIndex = 0;
             this.btnDelete.Text = "Sil";
             this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnSave
             // 
@@ -171,6 +176,7 @@ namespace SiparisOtomasyon.WinUI
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.panel4);
             this.panel2.Controls.Add(this.grid);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 381);
@@ -185,32 +191,33 @@ namespace SiparisOtomasyon.WinUI
             this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.grid.Location = new System.Drawing.Point(0, 0);
-            this.grid.MultiSelect = false;
             this.grid.Name = "grid";
             this.grid.ReadOnly = true;
             this.grid.RowTemplate.Height = 24;
             this.grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grid.Size = new System.Drawing.Size(910, 224);
             this.grid.TabIndex = 0;
+            this.grid.DataSourceChanged += new System.EventHandler(this.grid_DataSourceChanged);
+            this.grid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_CellDoubleClick);
             // 
-            // panel4
+            // pnlOrderDetail
             // 
-            this.panel4.BackColor = System.Drawing.SystemColors.Control;
-            this.panel4.Controls.Add(this.btnAdd);
-            this.panel4.Controls.Add(this.btnDeleteOrder);
-            this.panel4.Controls.Add(this.label15);
-            this.panel4.Controls.Add(this.nuDiscount);
-            this.panel4.Controls.Add(this.nuQuantity);
-            this.panel4.Controls.Add(this.nuUnitPrice);
-            this.panel4.Controls.Add(this.cmbProduct);
-            this.panel4.Controls.Add(this.label18);
-            this.panel4.Controls.Add(this.label17);
-            this.panel4.Controls.Add(this.label16);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 340);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(910, 41);
-            this.panel4.TabIndex = 5;
+            this.pnlOrderDetail.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlOrderDetail.Controls.Add(this.btnAdd);
+            this.pnlOrderDetail.Controls.Add(this.btnDeleteOrderDetail);
+            this.pnlOrderDetail.Controls.Add(this.label15);
+            this.pnlOrderDetail.Controls.Add(this.nuDiscount);
+            this.pnlOrderDetail.Controls.Add(this.nuQuantity);
+            this.pnlOrderDetail.Controls.Add(this.nuUnitPrice);
+            this.pnlOrderDetail.Controls.Add(this.cmbProduct);
+            this.pnlOrderDetail.Controls.Add(this.label18);
+            this.pnlOrderDetail.Controls.Add(this.label17);
+            this.pnlOrderDetail.Controls.Add(this.label16);
+            this.pnlOrderDetail.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlOrderDetail.Location = new System.Drawing.Point(0, 340);
+            this.pnlOrderDetail.Name = "pnlOrderDetail";
+            this.pnlOrderDetail.Size = new System.Drawing.Size(910, 41);
+            this.pnlOrderDetail.TabIndex = 5;
             // 
             // btnAdd
             // 
@@ -221,16 +228,18 @@ namespace SiparisOtomasyon.WinUI
             this.btnAdd.TabIndex = 5;
             this.btnAdd.Text = "Ekle";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // btnDeleteOrder
+            // btnDeleteOrderDetail
             // 
-            this.btnDeleteOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeleteOrder.Location = new System.Drawing.Point(834, 6);
-            this.btnDeleteOrder.Name = "btnDeleteOrder";
-            this.btnDeleteOrder.Size = new System.Drawing.Size(63, 26);
-            this.btnDeleteOrder.TabIndex = 5;
-            this.btnDeleteOrder.Text = "Sil";
-            this.btnDeleteOrder.UseVisualStyleBackColor = true;
+            this.btnDeleteOrderDetail.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteOrderDetail.Location = new System.Drawing.Point(834, 6);
+            this.btnDeleteOrderDetail.Name = "btnDeleteOrderDetail";
+            this.btnDeleteOrderDetail.Size = new System.Drawing.Size(63, 26);
+            this.btnDeleteOrderDetail.TabIndex = 5;
+            this.btnDeleteOrderDetail.Text = "Sil";
+            this.btnDeleteOrderDetail.UseVisualStyleBackColor = true;
+            this.btnDeleteOrderDetail.Click += new System.EventHandler(this.btnDeleteOrderDetail_Click);
             // 
             // label15
             // 
@@ -337,9 +346,9 @@ namespace SiparisOtomasyon.WinUI
             this.panel5.Controls.Add(this.label3);
             this.panel5.Controls.Add(this.label2);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(0, 75);
+            this.panel5.Location = new System.Drawing.Point(0, 60);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(910, 265);
+            this.panel5.Size = new System.Drawing.Size(910, 280);
             this.panel5.TabIndex = 6;
             // 
             // groupBox1
@@ -582,13 +591,32 @@ namespace SiparisOtomasyon.WinUI
             this.label2.TabIndex = 1;
             this.label2.Text = "Müşteri";
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.lblToplam);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel4.Location = new System.Drawing.Point(0, 186);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(910, 38);
+            this.panel4.TabIndex = 1;
+            // 
+            // lblToplam
+            // 
+            this.lblToplam.AutoSize = true;
+            this.lblToplam.ForeColor = System.Drawing.Color.Red;
+            this.lblToplam.Location = new System.Drawing.Point(584, 9);
+            this.lblToplam.Name = "lblToplam";
+            this.lblToplam.Size = new System.Drawing.Size(110, 17);
+            this.lblToplam.TabIndex = 0;
+            this.lblToplam.Text = "Toplam = 0.00 TL";
+            // 
             // OrderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(910, 669);
             this.Controls.Add(this.panel5);
-            this.Controls.Add(this.panel4);
+            this.Controls.Add(this.pnlOrderDetail);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
@@ -604,8 +632,8 @@ namespace SiparisOtomasyon.WinUI
             this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
+            this.pnlOrderDetail.ResumeLayout(false);
+            this.pnlOrderDetail.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nuDiscount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nuQuantity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nuUnitPrice)).EndInit();
@@ -614,6 +642,8 @@ namespace SiparisOtomasyon.WinUI
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nuFreight)).EndInit();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -628,7 +658,7 @@ namespace SiparisOtomasyon.WinUI
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel pnlOrderDetail;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.NumericUpDown nuDiscount;
         private System.Windows.Forms.NumericUpDown nuQuantity;
@@ -666,7 +696,9 @@ namespace SiparisOtomasyon.WinUI
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button btnDeleteOrder;
+        private System.Windows.Forms.Button btnDeleteOrderDetail;
         private System.Windows.Forms.DataGridView grid;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label lblToplam;
     }
 }

@@ -12,6 +12,5 @@ namespace SiparisOtomasyon.BL.Abstract
     public interface IOrderBusiness : IBusiness<Order,int>
     {
         List<OrderVM> GetOrderVMs();
-        List<OrderDetailVM> GetOrderDetailVMs(int id);
     }
 }

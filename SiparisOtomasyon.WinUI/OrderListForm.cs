@@ -37,7 +37,7 @@ namespace SiparisOtomasyon.WinUI
             grid.AutoGenerateColumns = false;
             grid.Columns.Add(UICoreUtility.generateDataGridViewTextBoxColumn("OrderId", "OrderId", "Sipariş ID"));
             grid.Columns.Add(UICoreUtility.generateDataGridViewTextBoxColumn("CompanyName", "CompanyName", "Müşteri"));
-            grid.Columns.Add(UICoreUtility.generateDataGridViewTextBoxColumn("EmployeeNameAndSurname", "EmployeeNameAndSurname", "İlgili Çalışan"));
+            grid.Columns.Add(UICoreUtility.generateDataGridViewTextBoxColumn("EmployeeName", "EmployeeName", "İlgili Çalışan"));
             grid.Columns.Add(UICoreUtility.generateDataGridViewTextBoxColumn("OrderDate", "OrderDate", "Sipariş Tarihi"));
 
         }
@@ -56,6 +56,7 @@ namespace SiparisOtomasyon.WinUI
             {
                 var form = new OrderForm();
                 form.MdiParent = this.MdiParent;
+                form.Dock = DockStyle.Fill;
                 form.Tag = order.OrderId;
                 form.FormClosed += Form_FormClosed;
                 form.Show();

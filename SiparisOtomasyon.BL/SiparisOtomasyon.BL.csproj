@@ -53,6 +53,7 @@
     <Compile Include="Abstract\ICustomerBusiness.cs" />
     <Compile Include="Abstract\IEmployeeBusiness.cs" />
     <Compile Include="Abstract\IOrderBusiness.cs" />
+    <Compile Include="Abstract\IOrderDetailBusiness.cs" />
     <Compile Include="Abstract\IProductBusiness.cs" />
     <Compile Include="Abstract\IShipperBusiness.cs" />
     <Compile Include="Abstract\ISupplierBusiness.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Concrete\CustomerBusiness.cs" />
     <Compile Include="Concrete\EmployeeBusiness.cs" />
     <Compile Include="Concrete\OrderBusiness.cs" />
+    <Compile Include="Concrete\OrderDetailBusiness.cs" />
     <Compile Include="Concrete\ProductBusiness.cs" />
     <Compile Include="Concrete\ShipperBusiness.cs" />
     <Compile Include="Concrete\SupplierBusiness.cs" />

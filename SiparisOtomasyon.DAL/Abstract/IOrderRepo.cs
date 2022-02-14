@@ -12,6 +12,6 @@ namespace SiparisOtomasyon.DAL.Abstract
     public interface IOrderRepo : IRepository<Order,int>
     {
         List<OrderVM> GetOrderVMs();
-        List<OrderDetailVM> GetOrderDetailVMs(int id);
+        
     }
 }

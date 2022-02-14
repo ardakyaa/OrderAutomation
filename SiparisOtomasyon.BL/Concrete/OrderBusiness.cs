@@ -41,11 +41,6 @@ namespace SiparisOtomasyon.BL.Concrete
             return orderRepo.GetById(id);
         }
 
-        public List<OrderDetailVM> GetOrderDetailVMs(int id)
-        {
-            return orderRepo.GetOrderDetailVMs(id);
-        }
-
         public List<OrderVM> GetOrderVMs()
         {
             return orderRepo.GetOrderVMs();

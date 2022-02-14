@@ -10,7 +10,7 @@ namespace SiparisOtomasyon.DAL.VM
     {
         public int OrderId { get; set; }
         public string CompanyName { get; set; }
-        public string EmployeeNameAndSurname { get; set; }
+        public string EmployeeName { get; set; }
         public DateTime? OrderDate { get; set; }
     }
 }

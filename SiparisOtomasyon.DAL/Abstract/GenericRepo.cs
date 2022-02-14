@@ -54,7 +54,7 @@ namespace SiparisOtomasyon.DAL.Abstract
         }
 
         public virtual List<T> Get()
-        {   
+        {
             return DB.Set<T>().AsNoTracking().ToList();
         }
 

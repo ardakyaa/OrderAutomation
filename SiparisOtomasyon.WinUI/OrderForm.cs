@@ -25,6 +25,7 @@ namespace SiparisOtomasyon.WinUI
         IEmployeeBusiness employeeBusiness;
         IShipperBusiness shipperBusiness;
         IOrderBusiness orderBusiness;
+        IOrderDetailBusiness orderDetailBusiness;
         public OrderForm()
         {
             InitializeComponent();
@@ -34,18 +35,19 @@ namespace SiparisOtomasyon.WinUI
             employeeBusiness = new EmployeeBusiness();
             shipperBusiness = new ShipperBusiness();
             orderBusiness = new OrderBusiness();
+            orderDetailBusiness = new OrderDetailBusiness();
         }
 
         private void OrderForm_Load(object sender, EventArgs e)
         {
             FillColumnMapping();
             FillControl();
-            FillData();
+            FillDataOrder();
                       
         }
         Order selectedOrder = null;
 
-        private void FillData()
+        private void FillDataOrder()
         {
             int id = Convert.ToInt32(this.Tag);
             if (id>0)
@@ -62,32 +64,38 @@ namespace SiparisOtomasyon.WinUI
                     cmbCustomer.SetSelectedValue(selectedOrder.CustomerID);
                     cmbEmployee.SetSelectedValue(selectedOrder.EmployeeID);
                     cmbShipVia.SetSelectedValue(selectedOrder.ShipVia);
-                    dtOrderDate.Value = selectedOrder.OrderDate.Value;
-                    dtRequiredDate.Value = selectedOrder.RequiredDate.Value;
-                    dtShippedDate.Value = selectedOrder.ShippedDate.Value;
+                    dtOrderDate.Value = Convert.ToDateTime(selectedOrder.OrderDate);
+                    dtRequiredDate.Value = Convert.ToDateTime(selectedOrder.RequiredDate);
+                    dtShippedDate.Value = Convert.ToDateTime(selectedOrder.ShippedDate);
                     nuFreight.Value =Convert.ToDecimal(selectedOrder.Freight);
 
                 }
-                FillGridOrderDetails();
+                FillGridOrderDetail(id);
             }
         }
 
-        private void FillGridOrderDetails()
+        
+        //Sipariş detayını doldurmak için kullanılacaktır.
+        private void FillGridOrderDetail(int id)
         {
-            int id = selectedOrder.OrderID;
-            grid.DataSource = null;
-            var result = orderBusiness.GetOrderDetailVMs(id);
-            grid.DataSource = result;
+            if (id > 0)
+            {
+                var orderDetails = orderDetailBusiness.GetOrderDetailVMs(id);
+                grid.DataSource = null;
+                grid.DataSource = orderDetails;
+            }
         }
+
         private void FillColumnMapping()
         {
             grid.AutoGenerateColumns = false;
-            grid.Columns.Add(UICoreUtility.generateDataGridViewTextBoxColumn("OrderId", "OrderId", "Sipariş ID"));
             grid.Columns.Add(UICoreUtility.generateDataGridViewTextBoxColumn("ProductName", "ProductName", "Ürün Adı"));
             grid.Columns.Add(UICoreUtility.generateDataGridViewTextBoxColumn("UnitPrice", "UnitPrice", "Birim Fiyat"));
             grid.Columns.Add(UICoreUtility.generateDataGridViewTextBoxColumn("Quantity", "Quantity", "Miktar"));
             grid.Columns.Add(UICoreUtility.generateDataGridViewTextBoxColumn("Discount", "Discount", "İndirim"));
-
+            grid.Columns.Add(UICoreUtility.generateDataGridViewTextBoxColumn("Total", "Total", "Satır Toplam"));
+            grid.Columns["Total"].DefaultCellStyle.Format = "N2"; //Currency ayarlaması
+            grid.Columns["UnitPrice"].DefaultCellStyle.Format = "N2";
         }
 
         private void FillControl()
@@ -122,6 +130,11 @@ namespace SiparisOtomasyon.WinUI
             cmbCustomer.SetCustomerFirstItems<Customer>(datasource, "CompanyName", "CustomerID", "Seçiniz");
         }
 
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         private void btnNew_Click(object sender, EventArgs e)
         {
             FormClear();
@@ -129,10 +142,11 @@ namespace SiparisOtomasyon.WinUI
 
         private void FormClear()
         {
-            this.Tag = null;
+            UICoreUtility.FormClear(this);
+            this.Tag = 0;
+            this.selectedOrderDetail = null;
             this.selectedOrder = null;
 
-            UICoreUtility.FormClear(this);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -140,50 +154,206 @@ namespace SiparisOtomasyon.WinUI
             FormSave();
         }
 
+        //Kontrol validasyonlarını yaz!!!!
         private void FormSave()
         {
             try
             {
                 if (this.selectedOrder == null)
                 {
-                    this.selectedOrder = new Order();
+                    selectedOrder = new Order();
                 }
 
-                this.selectedOrder.ShipName = txtShipName.Text;
-                this.selectedOrder.ShipAddress = txtShipName.Text;
-                this.selectedOrder.ShipCity = txtShipCity.Text;
-                this.selectedOrder.ShipCountry = txtShipCountry.Text;
-                this.selectedOrder.ShipRegion = txtShipRegion.Text;
-                this.selectedOrder.ShipPostalCode = txtShipRegion.Text;
-                this.selectedOrder.CustomerID = cmbCustomer.SelectedValue.ToString();
-                this.selectedOrder.EmployeeID = Convert.ToInt32(cmbEmployee.SelectedValue);
-                this.selectedOrder.ShipVia = Convert.ToInt32(cmbShipVia.SelectedValue);
-                this.selectedOrder.ShippedDate = dtShippedDate.Value;
-                this.selectedOrder.OrderDate = dtOrderDate.Value;
-                this.selectedOrder.RequiredDate = dtRequiredDate.Value;
-                this.selectedOrder.Freight = nuFreight.Value;
-
+                selectedOrder.ShipName = txtShipName.Text;
+                selectedOrder.ShipAddress = txtShipName.Text;
+                selectedOrder.ShipCity = txtShipCity.Text;
+                selectedOrder.ShipCountry = txtShipCountry.Text;
+                selectedOrder.ShipRegion = txtShipRegion.Text;
+                selectedOrder.ShipPostalCode = txtShipRegion.Text;
+                selectedOrder.CustomerID = cmbCustomer.SelectedValue?.ToString();
+                selectedOrder.EmployeeID = cmbEmployee.GetValue<int, EmployeeVM>().Value;
+                selectedOrder.ShipVia = cmbShipVia.GetValue<int, Shipper>().Value;
+                selectedOrder.ShippedDate = dtShippedDate.Value;
+                selectedOrder.OrderDate = dtOrderDate.Value;
+                selectedOrder.RequiredDate = dtRequiredDate.Value;
+                selectedOrder.Freight = nuFreight.Value;
 
                 int id = Convert.ToInt32(this.Tag);
                 if (id == 0)
                 {
                     orderBusiness.Add(this.selectedOrder);
-
+                    this.Tag = selectedOrder.OrderID;
                 }
                 else
                 {
                     orderBusiness.Update(this.selectedOrder);
                 }
 
-
-
-                UICoreUtility.SuccessMessage("İşlem başarılı bir şekilde yapıldı");
+                UICoreUtility.SuccessMessage("İşlem başarılı bir şekilde gerçekleşti.");
 
             }
             catch (Exception ex)
             {
                 UICoreUtility.ErrorMessage(ex.Message);
             }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            FormDelete();
+        }
+
+        private void FormDelete()
+        {
+            try
+            {
+                int id = Convert.ToInt32(this.Tag);
+                if (id>0)
+                {
+                    var dialog = UICoreUtility.DialogMessage("Kaydı silmek istediğinizden emin misiniz?");
+                    if (dialog==DialogResult.OK)
+                    {
+                        orderDetailBusiness.Delete(id);
+                        orderBusiness.Delete(id);
+                        this.Close();
+                    }
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                UICoreUtility.ErrorMessage(ex.Message);
+            }
+        }
+
+        //Order Detail Add
+        Order_Detail selectedOrderDetail;
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            bool isAdded = false;
+            try
+            {
+                if (this.selectedOrder == null)
+                {
+                    UICoreUtility.ErrorMessage("Lütfen önce sipariş kaydı yapınız. Sonrasında detay satırları girişini yapınız.");
+                    return;
+                }
+
+                if (cmbProduct.SelectedValue == null)
+                {
+                    UICoreUtility.ErrorMessage("Lütfen bir ürün seçiniz.");
+                    cmbProduct.Focus();
+                }
+
+                if (nuUnitPrice.Value == 0)
+                {
+                    UICoreUtility.ErrorMessage("Lütfen birim fiyat girişi yapınız");
+                    nuUnitPrice.Focus();
+                }
+
+                if (nuQuantity.Value == 0)
+                {
+                    UICoreUtility.ErrorMessage("Lütfen miktar girişi yapınız");
+                    nuQuantity.Focus();
+                }
+
+                if (selectedOrderDetail == null)
+                {
+                    selectedOrderDetail = new Order_Detail();
+                    isAdded = true;
+                }
+
+                selectedOrderDetail.OrderID = selectedOrder.OrderID;
+                if (isAdded)
+                    selectedOrderDetail.ProductID = cmbProduct.GetValue<int, Product>().Value;
+                selectedOrderDetail.UnitPrice = nuUnitPrice.Value;
+                selectedOrderDetail.Quantity = Convert.ToInt16(nuQuantity.Value);
+                selectedOrderDetail.Discount = Convert.ToSingle(nuDiscount.Value);
+
+                if (isAdded)
+                {
+                    orderDetailBusiness.Add(selectedOrderDetail);
+                }
+                else
+                {
+                    orderDetailBusiness.Update(selectedOrderDetail);
+                }
+                FormOrderDetailClear();
+                FillGridOrderDetail(selectedOrder.OrderID);
+                UICoreUtility.SuccessMessage("İşlem başarılı bir şekilde gerçekleşti.");
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+        }
+
+        private void grid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var orderDetailItem = (grid.DataSource as List<OrderDetailVM>)[e.RowIndex];
+            if (orderDetailItem!=null)
+            {
+                //selectedOrderDetail = orderDetailItem;
+                cmbProduct.SelectedValue = orderDetailItem.ProductId;
+                nuUnitPrice.Value = orderDetailItem.UnitPrice;
+                nuQuantity.Value = orderDetailItem.Quantity;
+                nuDiscount.Value =Convert.ToDecimal(orderDetailItem.Discount);
+                selectedOrderDetail = new Order_Detail()
+                {
+                    OrderID=orderDetailItem.OrderId,
+                    Discount=orderDetailItem.Discount,
+                    ProductID=orderDetailItem.ProductId,
+                    Quantity=orderDetailItem.Quantity,
+                    UnitPrice=orderDetailItem.UnitPrice
+                };
+            }
+        }
+
+        private void FormOrderDetailClear()
+        {
+            selectedOrderDetail = null;
+            UICoreUtility.FormClear(pnlOrderDetail);
+        }
+
+        private void btnDeleteOrderDetail_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (grid.SelectedRows.Count > 0)
+                {
+                    var dialogResult = UICoreUtility.DialogMessage("Seçilen kayıtları silmek istiyor musunuz?");
+                    if (dialogResult == DialogResult.OK)
+                    {
+                        foreach (DataGridViewRow row in grid.SelectedRows)
+                        {
+                            var item = (row.DataBoundItem as OrderDetailVM);
+                            orderDetailBusiness.Delete(item.OrderId, item.ProductId);
+                        }
+                        UICoreUtility.SuccessMessage("İşlem başarılı bir şekilde gerçekleşti");
+                        FillGridOrderDetail(this.selectedOrder.OrderID);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+        }
+
+        private void TotalUpdate()
+        {
+            var orderDetails = (grid.DataSource as List<OrderDetailVM>);
+            if (orderDetails != null)
+                lblToplam.Text =$"Toplam Tutar={orderDetails.Sum(t0 => t0.Total).ToString("N2")} TL" ;
+        }
+
+        private void grid_DataSourceChanged(object sender, EventArgs e)
+        {
+            TotalUpdate();
         }
     }
 }
